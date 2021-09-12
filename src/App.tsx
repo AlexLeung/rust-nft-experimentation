@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
+import * as React from 'react';
 import './App.css';
+import { loadMetadata } from './utils/metadata';
 
 function App() {
+  const [metadata, setMetadata] = React.useState('not loaded');
+  React.useEffect(() => {
+    (async () => {
+      console.log("hello world");
+      const m = await loadMetadata();
+      setMetadata(JSON.stringify(m, null, 2));
+    })();
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{padding: 30}}>
+        <pre>{metadata}</pre>
     </div>
   );
 }
